@@ -153,6 +153,31 @@ const advPromise = new AdvancedPromise(
 const promiseData = advPromise.data; // {name:"Shivam",age:25}
 ```
 
+### A working example on node
+
+```js
+import fetch from "node-fetch";
+import AdvancedPromise from "advanced-promise";
+
+const loadData = (id) => {
+	return new AdvancedPromise((resolve, reject, abortSignal) => {
+		fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, { signal: abortSignal })
+			.then((response) => response.json())
+			.then(resolve)
+			.catch(reject);
+	});
+};
+
+const id = 1;
+const advPromise = loadData(id);
+advPromise
+	.then((myData) => {
+		console.log("My Data\n", myData);
+	})
+	.catch((err) => console.log("My Error:\n", err));
+advPromise.abort();
+```
+
 ## Contact
 
 You can contact me on [github](https://github.com/ShivamS136) anytime.

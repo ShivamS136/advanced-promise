@@ -1,4 +1,4 @@
-import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only.js";
 
 class AbortError extends Error {
 	constructor(message = "Aborted") {
@@ -13,7 +13,7 @@ class AbortError extends Error {
  * * 2. Add some data to promise and fetch via .data
  * * 3. Get status of Promise using the getter isFulfilled, isSettled, isRejected, status
  */
-export class AdvancedPromise extends Promise {
+class AdvancedPromise extends Promise {
 	constructor(executor, data = {}) {
 		const abortController = new AbortController();
 		const abortSignal = abortController.signal;
@@ -80,3 +80,5 @@ export class AdvancedPromise extends Promise {
 		});
 	};
 }
+
+export default AdvancedPromise;
