@@ -26,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/ShivamS136/advanced-promise/issues"
   },
-  "homepage": "https://github.com/ShivamS136/advanced-promise#readme"
+  "homepage": "https://github.com/ShivamS136/advanced-promise#readme",
+  "devDependencies": {
+    "jest": "^27.2.1"
+  },
+  "dependencies": {
+    "abortcontroller-polyfill": "^1.7.3"
+  }
 }

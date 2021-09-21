@@ -1,4 +1,6 @@
-export class AbortError extends Error {
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+
+class AbortError extends Error {
 	constructor(message = "Aborted") {
 		super(message);
 		this.name = "AbortError";
@@ -9,33 +11,32 @@ export class AbortError extends Error {
  * * This class extends Promise and add some extra abilities to it
  * * 1. Add AbortSignal to it and pass to Fetch as well, All the Promises are abortable/cancellable
  * * 2. Add some data to promise and fetch via .data
- * * 3. Get status of Promise using the getter isFulfilled, isSettled, isRejected
+ * * 3. Get status of Promise using the getter isFulfilled, isSettled, isRejected, status
  */
 export class AdvancedPromise extends Promise {
 	constructor(executor, data = {}) {
 		const abortController = new AbortController();
 		const abortSignal = abortController.signal;
-		var status = { value: 0 };
+		var meta = { status: "pending", data: data };
 
 		const normalExecutor = (resolve, reject) => {
 			abortSignal.addEventListener("abort", () => {
 				reject(new AbortError(this._abortReason));
 			});
 			var res = (d) => {
-				status.value = 1;
-				resolve(d);
+				meta.status = "settled";
+				if (resolve) resolve(d);
 			};
 			var rej = (d) => {
-				status.value = -1;
-				reject(d);
+				meta.status = "rejected";
+				if (reject) reject(d);
 			};
 			executor(res, rej, abortSignal, data);
 		};
 
 		super(normalExecutor);
 
-		this._data = data;
-		this._status = status;
+		this._meta = meta;
 
 		// Bind the abort method
 		this.cancel = this.abort = (reason) => {
@@ -50,20 +51,32 @@ export class AdvancedPromise extends Promise {
 	}
 
 	get data() {
-		return this._data;
+		return this._meat.data;
 	}
 
 	get isFulfilled() {
-		return !!this._status.value;
+		return this._meta.status !== "pending";
 	}
 
 	get isSettled() {
-		return this._status.value === 1;
+		return this._meta.status !== "settled";
 	}
 
 	get isRejected() {
-		return this._status.value === -1;
+		return this._meta.status !== "rejected";
 	}
-}
 
-module.exports = AdvancedPromise;
+	get status() {
+		return this._meta.status;
+	}
+
+	static from = (promise) => {
+		if (promise instanceof AdvancedPromise) {
+			return promise;
+		}
+
+		return new AdvancedPromise((resolve, reject) => {
+			promise.then(resolve).catch(reject);
+		});
+	};
+}
