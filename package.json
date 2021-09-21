@@ -1,36 +1,35 @@
 {
-  "name": "advanced-promise",
-  "version": "1.0.0",
-  "description": "A simple wrapper class for Promise class, which add multiple advanced functionality to the default promise like Aborting, data binding, status checking.",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ShivamS136/advanced-promise.git"
-  },
-  "keywords": [
-    "promise",
-    "advanced",
-    "promise",
-    "abort",
-    "abortable",
-    "abortable",
-    "promise",
-    "enhanced",
-    "promise"
-  ],
-  "author": "Shivam Sharma",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ShivamS136/advanced-promise/issues"
-  },
-  "homepage": "https://github.com/ShivamS136/advanced-promise#readme",
-  "devDependencies": {
-    "jest": "^27.2.1"
-  },
-  "dependencies": {
-    "abortcontroller-polyfill": "^1.7.3"
-  }
+	"name": "advanced-promise",
+	"version": "0.1.0",
+	"description": "A simple wrapper class for Promise class, which add multiple advanced functionality to the default promise like Aborting, data binding, status checking.",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ShivamS136/advanced-promise.git"
+	},
+	"keywords": [
+		"promise",
+		"advanced",
+		"promise",
+		"abort",
+		"abortable",
+		"abortable",
+		"promise",
+		"enhanced",
+		"promise"
+	],
+	"author": "Shivam Sharma",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ShivamS136/advanced-promise/issues"
+	},
+	"homepage": "https://github.com/ShivamS136/advanced-promise#readme",
+	"devDependencies": {},
+	"dependencies": {
+		"abortcontroller-polyfill": "^1.7.3"
+	}
 }

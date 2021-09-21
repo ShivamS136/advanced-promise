@@ -99,7 +99,7 @@ advPromise.status; // "pending" | "resolved" | "rejected"
 #### Use with Fetch
 
 ```js
-const loadData = (id: number) => {
+const loadData = (id) => {
 	return new AdvancedPromise((resolve, reject, abortSignal) => {
 		fetch(url, { signal: abortSignal })
 			.then((response) => response.json())
@@ -152,3 +152,9 @@ const advPromise = new AdvancedPromise(
 //...
 const promiseData = advPromise.data; // {name:"Shivam",age:25}
 ```
+
+## Contact
+
+You can contact me on [github](https://github.com/ShivamS136) anytime.
+
+This package is inspired by [this package](https://github.com/zzdjk6/simple-abortable-promise) from [Thor(Shenghan) Chen](https://github.com/zzdjk6).
