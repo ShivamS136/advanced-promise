@@ -56,6 +56,7 @@ var AbortError = /*#__PURE__*/function (_Error) {
  * * 1. Add AbortSignal to it and pass to Fetch as well, All the Promises are abortable/cancellable
  * * 2. Add some data to promise and fetch via .data
  * * 3. Get status of Promise using the getter isFulfilled, isSettled, isRejected, status
+ * * 4. More features like resolve/reject from outside, timeout for fetch
  */
 
 
@@ -64,10 +65,10 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
 
   var _super2 = _createSuper(AdvancedPromise);
 
-  function AdvancedPromise(executor) {
+  function AdvancedPromise(executor, timeout) {
     var _this2;
 
-    var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
     _classCallCheck(this, AdvancedPromise);
 
@@ -77,27 +78,32 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
       status: "pending",
       data: data,
       resolve: function resolve() {},
-      reject: function reject() {}
+      reject: function reject() {},
+      timeoutId: 0,
+      timeoutStatus: undefined
     };
 
     var normalExecutor = function normalExecutor(resolve, reject) {
-      abortSignal.addEventListener("abort", function () {
-        reject(new AbortError(_this2._abortReason));
-      });
-
       var res = function res(d) {
-        meta.status = "settled";
-        if (resolve) resolve(d);
+        if (meta.status === "pending") {
+          meta.status = "settled";
+          if (resolve) resolve(d);
+        }
       };
 
       var rej = function rej(d) {
-        meta.status = "rejected";
-        if (reject) reject(d);
+        if (meta.status === "pending") {
+          meta.status = "rejected";
+          if (reject) reject(d);
+        }
       };
 
+      abortSignal.addEventListener("abort", function () {
+        rej(new AbortError(_this2._abortReason));
+      });
       meta.resolve = res;
       meta.reject = rej;
-      executor(res, rej, abortSignal, data);
+      executor(res, rej, abortSignal);
     };
 
     _this2 = _super2.call(this, normalExecutor);
@@ -108,10 +114,29 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
       abortController.abort();
     };
 
+    if (timeout) {
+      _this2._meta.timeoutStatus = false;
+      _this2._meta.timeoutId = setTimeout(function () {
+        _this2._meta.timeoutStatus = true;
+
+        _this2.abort("".concat(timeout, "ms timeout expired"));
+      }, timeout);
+    }
+
     return _this2;
   }
 
   _createClass(AdvancedPromise, [{
+    key: "cancelTimeout",
+    value: function cancelTimeout() {
+      if (!this.isFulfilled && this._meta.timeoutId) {
+        clearTimeout(this._meta.timeoutId);
+        return true;
+      }
+
+      return false;
+    }
+  }, {
     key: "resolve",
     value: function resolve(data) {
       this._meta.resolve(data);
@@ -146,6 +171,11 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
     key: "isRejected",
     get: function get() {
       return this._meta.status !== "rejected";
+    }
+  }, {
+    key: "isTimedout",
+    get: function get() {
+      return this._meta.timeoutStatus;
     }
   }, {
     key: "status",

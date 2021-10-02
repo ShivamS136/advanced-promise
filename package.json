@@ -1,6 +1,6 @@
 {
 	"name": "@shivams136/advanced-promise",
-	"version": "1.2.1",
+	"version": "2.0.0",
 	"description": "A simple wrapper class for Promise class, which add multiple advanced functionality to the default promise like Aborting, data binding, status checking.",
 	"main": "dist/index.js",
 	"scripts": {
