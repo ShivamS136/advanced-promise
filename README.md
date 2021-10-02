@@ -94,6 +94,15 @@ advPromise.isRejected; // true/false
 advPromise.status; // "pending" | "resolved" | "rejected"
 ```
 
+### Resolve/Reject fromm outside
+
+You can easily resolve/reject the promise from outside by just calling `resolve()` or `reject()` methods from outside.
+
+```js
+advPromise.resolve("Test Data");
+advPromise.reject("Test Error");
+```
+
 ### Examples:
 
 #### Use with Fetch

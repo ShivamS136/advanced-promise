@@ -17,7 +17,7 @@ class AdvancedPromise extends Promise {
 	constructor(executor, data = {}) {
 		const abortController = new AbortController();
 		const abortSignal = abortController.signal;
-		var meta = { status: "pending", data: data };
+		var meta = { status: "pending", data: data, resolve: () => {}, reject: () => {} };
 
 		const normalExecutor = (resolve, reject) => {
 			abortSignal.addEventListener("abort", () => {
@@ -31,6 +31,8 @@ class AdvancedPromise extends Promise {
 				meta.status = "rejected";
 				if (reject) reject(d);
 			};
+			meta.resolve = res;
+			meta.reject = rej;
 			executor(res, rej, abortSignal, data);
 		};
 
@@ -45,13 +47,21 @@ class AdvancedPromise extends Promise {
 		};
 	}
 
+	resolve(data) {
+		this._meta.resolve(data);
+	}
+
+	reject(reason) {
+		this._meta.reject(reason);
+	}
+
 	// Getter to access abort reason
 	get abortReason() {
 		return this._abortReason;
 	}
 
 	get data() {
-		return this._meat.data;
+		return this._meta.data;
 	}
 
 	get isFulfilled() {

@@ -75,7 +75,9 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
     var abortSignal = abortController.signal;
     var meta = {
       status: "pending",
-      data: data
+      data: data,
+      resolve: function resolve() {},
+      reject: function reject() {}
     };
 
     var normalExecutor = function normalExecutor(resolve, reject) {
@@ -93,6 +95,8 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
         if (reject) reject(d);
       };
 
+      meta.resolve = res;
+      meta.reject = rej;
       executor(res, rej, abortSignal, data);
     };
 
@@ -105,10 +109,20 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
     };
 
     return _this2;
-  } // Getter to access abort reason
-
+  }
 
   _createClass(AdvancedPromise, [{
+    key: "resolve",
+    value: function resolve(data) {
+      this._meta.resolve(data);
+    }
+  }, {
+    key: "reject",
+    value: function reject(reason) {
+      this._meta.reject(reason);
+    } // Getter to access abort reason
+
+  }, {
     key: "abortReason",
     get: function get() {
       return this._abortReason;
@@ -116,7 +130,7 @@ var AdvancedPromise = /*#__PURE__*/function (_Promise) {
   }, {
     key: "data",
     get: function get() {
-      return this._meat.data;
+      return this._meta.data;
     }
   }, {
     key: "isFulfilled",
