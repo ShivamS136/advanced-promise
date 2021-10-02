@@ -131,7 +131,7 @@ advPromise.reject("Test Error");
 
 ## Examples:
 
-### Use with Fetch with timeout
+### Use with Fetch and a timeout value
 
 ```js
 const loadData = (id) => {
