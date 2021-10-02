@@ -33,7 +33,10 @@
 		"simple",
 		"async",
 		"await",
-		"signal"
+		"signal",
+		"timeout",
+		"fetch",
+		"ajax"
 	],
 	"author": "Shivam Sharma",
 	"license": "MIT",
