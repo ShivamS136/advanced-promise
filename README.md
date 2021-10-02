@@ -161,7 +161,7 @@ const advPromise = new AdvancedPromise((resolve, reject, abortSignal) => {
 });
 ```
 
-## Use status
+### Use status
 
 ```js
 const advPromise = new AdvancedPromise((resolve, reject, abortSignal) => {
@@ -173,7 +173,7 @@ const advPromise = new AdvancedPromise((resolve, reject, abortSignal) => {
 const iconColor = advPromise.isFulfilled ? (advPromise.isSettled ? "green" : "red") : "orange";
 ```
 
-## Use Data
+### Use Data
 
 ```js
 const advPromise = new AdvancedPromise(
@@ -189,7 +189,7 @@ const advPromise = new AdvancedPromise(
 const promiseData = advPromise.data; // {name:"Shivam",age:25}
 ```
 
-## Working Example with plain JS
+### Working Example with plain JS
 
 You can find the code sandbox [here](https://codesandbox.io/s/advanced-promise-ej59h?file=/src/index.js).
 
@@ -217,7 +217,7 @@ advPromise
 advPromise.abort();
 ```
 
-## A working example on node
+### A working example on node
 
 You can find the code sandbox [here](https://replit.com/@shivams136/Advanced-Promise#index.js).
 
@@ -244,7 +244,7 @@ advPromise
 advPromise.abort();
 ```
 
-# Contact
+## Contact
 
 You can contact me on [github](https://github.com/ShivamS136) anytime.
 
