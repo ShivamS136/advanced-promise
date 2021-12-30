@@ -1,4 +1,6 @@
-require("abortcontroller-polyfill/dist/abortcontroller-polyfill-only");
+// import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+
+import "../node_modules/abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
 
 class AbortError extends Error {
 	constructor(message = "Aborted") {
@@ -123,4 +125,4 @@ class AdvancedPromise extends Promise {
 	};
 }
 
-module.exports = AdvancedPromise;
+export default AdvancedPromise;
