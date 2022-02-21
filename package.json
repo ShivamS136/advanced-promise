@@ -1,12 +1,21 @@
 {
 	"name": "@shivams136/advanced-promise",
-	"version": "2.0.0",
+	"version": "2.1.1",
 	"description": "A simple wrapper class for Promise class, which add multiple advanced functionality to the default promise like Aborting, data binding, status checking.",
-	"main": "dist/index.js",
+	"source": "src/index.js",
+	"main": "dist/main.js",
+	"module": "dist/module.js",
+	"targets": {
+		"main": {
+			"optimize": true
+		},
+		"module": {
+			"optimize": true
+		}
+	},
 	"scripts": {
-		"start": "npx babel src --watch --out-dir dist",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "npx babel src --out-dir dist"
+		"start": "parcel watch",
+		"build": "parcel build --no-source-maps"
 	},
 	"repository": {
 		"type": "git",
@@ -45,9 +54,7 @@
 	},
 	"homepage": "https://github.com/ShivamS136/advanced-promise#readme",
 	"devDependencies": {
-		"@babel/cli": "^7.15.7",
-		"@babel/core": "^7.15.5",
-		"@babel/preset-env": "^7.15.6"
+		"parcel": "^2.0.1"
 	},
 	"dependencies": {
 		"abortcontroller-polyfill": "^1.7.3"
