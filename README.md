@@ -1,6 +1,8 @@
 # advanced-promise
 
-A simple extension to the native Promise API
+A simple extension to the native Promise API.
+
+Download the package from [here](https://www.npmjs.com/package/@shivams136/advanced-promise)
 
 # Overview
 
